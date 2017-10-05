@@ -23,9 +23,9 @@ EMOJIONE_FONT_FILE=emojione-svg.otf
 echo "       Patching fonts.css"
 pushd .downloads
 patch -f -r - -p1 <<EOF
-diff -ru a/prince-11.1-linux-generic-x86_64/lib/prince/style/fonts.css b/prince-11.1-linux-generic-x86_64/lib/prince/style/fonts.css
---- a/prince-11.1-linux-generic-x86_64/lib/prince/style/fonts.css 2017-02-23 04:52:59.000000000 +0100
-+++ b/prince-11.1-linux-generic-x86_64/lib/prince/style/fonts.css 2017-10-04 14:28:16.855990455 +0200
+diff -ru a/prince-11.3-linux-generic-x86_64/lib/prince/style/fonts.css b/prince-11.3-linux-generic-x86_64/lib/prince/style/fonts.css
+--- a/prince-11.3-linux-generic-x86_64/lib/prince/style/fonts.css 2017-02-23 04:52:59.000000000 +0100
++++ b/prince-11.3-linux-generic-x86_64/lib/prince/style/fonts.css 2017-10-04 14:28:16.855990455 +0200
 @@ -131,3 +131,8 @@
      src: prince-lookup("Comic Sans MS"), prince-lookup("DejaVu Sans"), prince-lookup("DejaVu LGC Sans"), prince-lookup("Liberation Sans")
  }
