@@ -17,7 +17,7 @@ fi
 echo "       Installing EmojiOne font"
 EMOJIONE_FONT_FILE=/usr/local/share/fonts/emojione-svg.otf
 (cd .downloads; [ -f $EMOJIONE_FONT_FILE ] ||
-  sudo curl -s https://github.com/emojione/emojione-assets/releases/download/3.1.2/emojione-svg.otf -o $EMOJIONE_FONT_FILE && fc-cache -f)
+  curl -s https://github.com/emojione/emojione-assets/releases/download/3.1.2/emojione-svg.otf -o $EMOJIONE_FONT_FILE && fc-cache -f)
 
 echo "       Patching fonts.css"
 pushd .downloads
