@@ -15,9 +15,9 @@ else
 fi
 
 echo "       Installing EmojiOne font"
-EMOJIONE_FONT_FILE=/usr/local/share/fonts/emojione-svg.otf
+EMOJIONE_FONT_FILE=emojione-svg.otf
 (cd .downloads; [ -f $EMOJIONE_FONT_FILE ] ||
-  curl -s -L https://github.com/emojione/emojione-assets/releases/download/3.1.2/emojione-svg.otf -o $EMOJIONE_FONT_FILE && fc-cache -f)
+  (curl -L https://github.com/emojione/emojione-assets/releases/download/3.1.2/emojione-svg.otf -o $EMOJIONE_FONT_FILE && mv -vi $EMOJIONE_FONT_FILE /usr/local/share/fonts && fc-cache -vf))
 
 echo "       Patching fonts.css"
 pushd .downloads
