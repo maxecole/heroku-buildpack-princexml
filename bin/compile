@@ -17,7 +17,7 @@ fi
 echo "       Installing EmojiOne font"
 EMOJIONE_FONT_FILE=/usr/local/share/fonts/emojione-svg.otf
 (cd .downloads; [ -f $EMOJIONE_FONT_FILE ] ||
-  curl -s https://github.com/emojione/emojione-assets/releases/download/3.1.2/emojione-svg.otf -o $EMOJIONE_FONT_FILE && fc-cache -f)
+  curl -s -L https://github.com/emojione/emojione-assets/releases/download/3.1.2/emojione-svg.otf -o $EMOJIONE_FONT_FILE && fc-cache -f)
 
 echo "       Patching fonts.css"
 pushd .downloads
@@ -28,7 +28,7 @@ diff -ru a/prince-11.1-linux-generic-x86_64/lib/prince/style/fonts.css b/prince-
 @@ -131,3 +131,8 @@
      src: prince-lookup("Comic Sans MS"), prince-lookup("DejaVu Sans"), prince-lookup("DejaVu LGC Sans"), prince-lookup("Liberation Sans")
  }
- 
+
 +/* emoji font */
 +@font-face {
 +    font-family: sans-serif;
