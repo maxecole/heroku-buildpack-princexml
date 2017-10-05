@@ -16,8 +16,9 @@ fi
 
 echo "       Installing EmojiOne font"
 EMOJIONE_FONT_FILE=emojione-svg.otf
+[ -d $1/.fonts ] || mkdir -v $1/.fonts
 (cd .downloads; [ -f $EMOJIONE_FONT_FILE ] ||
-  (curl -L https://github.com/emojione/emojione-assets/releases/download/3.1.2/emojione-svg.otf -o $EMOJIONE_FONT_FILE && mv -vi $EMOJIONE_FONT_FILE /usr/local/share/fonts && fc-cache -vf))
+  (curl -L https://github.com/emojione/emojione-assets/releases/download/3.1.2/emojione-svg.otf -o $EMOJIONE_FONT_FILE && cp -v $EMOJIONE_FONT_FILE $1/.fonts/ && fc-cache -vf))
 
 echo "       Patching fonts.css"
 pushd .downloads
