@@ -1,10 +1,10 @@
 #!/bin/bash
 
-PRINCE_VERSION="11"
+PRINCE_VERSION="11.4"
 echo "-----> Installing PrinceXML $PRINCE_VERSION"
 [ -d .downloads ] || mkdir .downloads
-(cd .downloads; [ -d "prince-$PRINCE_VERSION-linux-amd64-static" ] ||
-  curl -s http://www.princexml.com/download/prince-$PRINCE_VERSION-linux-generic-x86_64.tar.gz | tar xzf -)
+(cd .downloads; [ -d "prince-$PRINCE_VERSION-linux-generic-x86_64" ] ||
+  curl -s https://www.princexml.com/download/prince-$PRINCE_VERSION-linux-generic-x86_64.tar.gz | tar xzf -)
 
 LICENSE_FILE=$3/PRINCEXML_LICENSE
 if [ -f $LICENSE_FILE ]; then
@@ -13,6 +13,30 @@ if [ -f $LICENSE_FILE ]; then
 else
 	echo "       No license found"
 fi
+
+echo "       Installing EmojiOne font"
+EMOJIONE_FONT_FILE=emojione-svg.otf
+[ -d $1/.fonts ] || mkdir -v $1/.fonts
+(cd .downloads; [ -f $EMOJIONE_FONT_FILE ] ||
+  (curl -L https://github.com/emojione/emojione-assets/releases/download/3.1.2/emojione-svg.otf -o $EMOJIONE_FONT_FILE && cp -v $EMOJIONE_FONT_FILE $1/.fonts/ && fc-cache -vf))
+
+echo "       Patching fonts.css"
+pushd .downloads
+patch -f -r - -p1 <<EOF
+diff -ru a/prince-11.4-linux-generic-x86_64/lib/prince/style/fonts.css b/prince-11.4-linux-generic-x86_64/lib/prince/style/fonts.css
+--- a/prince-11.4-linux-generic-x86_64/lib/prince/style/fonts.css 2018-05-31 10:58:32.000000000 +0200
++++ b/prince-11.4-linux-generic-x86_64/lib/prince/style/fonts.css 2018-06-07 09:56:12.241630282 +0200
+@@ -131,3 +131,8 @@
+     src: prince-lookup("Comic Sans MS"), prince-lookup("DejaVu Sans"), prince-lookup("DejaVu LGC Sans"), prince-lookup("Liberation Sans")
+ }
+
++/* emoji font */
++@font-face {
++    font-family: sans-serif;
++    src: prince-lookup("EmojiOne")
++}
+EOF
+popd
 
 echo $1 | ./.downloads/prince-$PRINCE_VERSION-linux-generic-x86_64/install.sh
 cat >$1/bin/prince <<EOF
